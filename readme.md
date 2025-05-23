@@ -19,6 +19,8 @@
   pip install transformers==4.51.3 accelerate
   pip install qwen-vl-utils
   pip install -r requirements_web_demo.txt
+  pip install decord
+  pip install flash_attn
   ```
 
   其中requirements_web_demo.txt内容如下
@@ -36,13 +38,109 @@
 
   # Optional dependency
   # Uncomment the following line if you need flash-attn
-  # flash-attn==2.6.1
+  # flash-attn==2.6.1 # 这个版本已经不对了
   ```
   注意要注释掉
   ```shell
   git+https://github.com/huggingface/transformers.git
   ```
   **因为huggingface大概率需要挂梯子**
+  <br>
+
+- 检查最终完整的依赖
+
+  ```shell
+  pip freeze > pip_depend.txt
+  ```
+  最后得到的pip_depend.txt如下
+
+  ```txt
+  accelerate==1.7.0
+  aiofiles==23.2.1
+  annotated-types==0.7.0
+  anyio==4.9.0
+  av==14.4.0
+  certifi==2025.4.26
+  charset-normalizer==3.4.2
+  click==8.1.8
+  decord==0.6.0
+  einops==0.8.1
+  exceptiongroup==1.3.0
+  fastapi==0.115.12
+  ffmpy==0.5.0
+  filelock==3.18.0
+  flash_attn==2.7.4.post1
+  fsspec==2025.5.0
+  gradio==5.4.0
+  gradio_client==1.4.2
+  h11==0.16.0
+  httpcore==1.0.9
+  httpx==0.28.1
+  huggingface-hub==0.31.4
+  idna==3.10
+  Jinja2==3.1.6
+  markdown-it-py==3.0.0
+  MarkupSafe==2.1.5
+  mdurl==0.1.2
+  mpmath==1.3.0
+  networkx==3.4.2
+  numpy==2.2.6
+  nvidia-cublas-cu12==12.1.3.1
+  nvidia-cuda-cupti-cu12==12.1.105
+  nvidia-cuda-nvrtc-cu12==12.1.105
+  nvidia-cuda-runtime-cu12==12.1.105
+  nvidia-cudnn-cu12==9.1.0.70
+  nvidia-cufft-cu12==11.0.2.54
+  nvidia-cufile-cu12==1.11.1.6
+  nvidia-curand-cu12==10.3.2.106
+  nvidia-cusolver-cu12==11.4.5.107
+  nvidia-cusparse-cu12==12.1.0.106
+  nvidia-cusparselt-cu12==0.6.3
+  nvidia-nccl-cu12==2.20.5
+  nvidia-nvjitlink-cu12==12.6.85
+  nvidia-nvtx-cu12==12.1.105
+  orjson==3.10.18
+  packaging==25.0
+  pandas==2.2.3
+  pillow==11.2.1
+  psutil==7.0.0
+  pydantic==2.11.4
+  pydantic_core==2.33.2
+  pydub==0.25.1
+  Pygments==2.19.1
+  python-dateutil==2.9.0.post0
+  python-multipart==0.0.12
+  pytz==2025.2
+  PyYAML==6.0.2
+  qwen-vl-utils==0.0.10
+  regex==2024.11.6
+  requests==2.32.3
+  rich==14.0.0
+  ruff==0.11.10
+  safehttpx==0.1.6
+  safetensors==0.5.3
+  semantic-version==2.10.0
+  shellingham==1.5.4
+  six==1.17.0
+  sniffio==1.3.1
+  starlette==0.46.2
+  sympy==1.14.0
+  tokenizers==0.21.1
+  tomlkit==0.12.0
+  torch==2.4.0
+  torchvision==0.19.0
+  tqdm==4.67.1
+  transformers==4.51.3
+  transformers-stream-generator==0.0.4
+  triton==3.0.0
+  typer==0.15.4
+  typing-inspection==0.4.1
+  typing_extensions==4.13.2
+  tzdata==2025.2
+  urllib3==2.4.0
+  uvicorn==0.34.2
+  websockets==12.0
+  ```
   <br>
 
 - 安装模型本体
@@ -131,5 +229,28 @@
   运行
   ```py
   python3 demo.py
+  ```
+  正确输出推理内容即可.
+  <br>
+
+- 视频推理
+
+  ```py
+  # 修改对应的messages即可
+  # video message
+  messages = [
+      {
+          "role": "user",
+          "content": [
+              {
+                  "type": "video",
+                  "video": "videos/  100325-655758396_resize1080p.mp4",
+                  "max_pixels": 360 * 420,
+                  "fps": 1.0,
+              },
+              {"type": "text", "text": "描述这段视频"}
+          ],
+      }
+  ]
   ```
   正确输出推理内容即可.
