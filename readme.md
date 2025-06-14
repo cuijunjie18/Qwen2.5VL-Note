@@ -147,9 +147,15 @@
   魔搭社区(huggingface也行):https://modelscope.cn/collections/Qwen25-VL-58fbb5d31f1d47
   找到相应的硬件带得动的模型大小.
 
-  这里我用git安装(**缺点：无可视化进度**)，魔搭社区也有其他安装方法.
+  这里我用git安装(**缺点：无可视化进度、会把log也clone下来**)，魔搭社区也有其他安装方法.
   ```shell
   git clone https://www.modelscope.cn/Qwen/Qwen2.5-VL-7B-Instruct.git
+  ```
+
+  使用modelscope下载模型
+  ```shell
+  pip install modelscope
+  modelscope download --model Qwen/Qwen2.5-VL-32B-Instruct --local_dir ./dir # 指定本地路径
   ```
   <br>
 - 链接模型文件到Qwen2.5Vl本体(option/可选)
