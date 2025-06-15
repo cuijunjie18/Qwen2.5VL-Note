@@ -1,7 +1,14 @@
-## Qwen2.5VL本地部署
+# Qwen2.5VL本地部署
 
-### 部署流程
+## 目录
 
+[环境配置](#环境配置)  
+[模型下载](#模型下载)
+[推理测试](#demo测试)
+
+## 环境配置
+
+### 使用conda配置
 - conda创建独立虚拟环境
   ```shell
   conda create --name Qwen2.5VL python=3.10
@@ -143,6 +150,57 @@
   ```
   <br>
 
+### 使用uv配置
+
+- 初始化uv环境
+  ```shell
+  mkdir Qwen2.5VL
+  cd Qwen2.5VL
+  uv init
+  uv python pin 3.11
+  ```
+  测试初始环境
+  ```shell
+  uv run main.py
+  ```
+
+- 列出依赖表
+  ```shell
+  vim requirements.txt
+  ```
+  ```vim
+  # 必须
+  torch
+  torchvision
+  transformers
+  accelerate
+  qwen-vl-utils
+  decord  # 视频处理
+
+  # 我的工具
+  tqdm
+  opencv-python
+  torchinfo
+  matplotlib
+  ```
+
+- 安装基础环境
+  ```shell
+  uv add -r requirements.txt
+  ```
+
+- flash-attn安装(未解决)
+  通常来说，直接pip安装，或者uv add安装容易出现**依赖错误或者版本错误**，使用官网包安装.
+
+  在官网找到对应的cuda、torch、cpython版本
+  官网版本：https://github.com/Dao-AILab/flash-attention/releases
+
+  ```shell
+  uv add xxxx.whl
+  ```
+
+## 模型下载
+
 - 安装模型本体
   魔搭社区(huggingface也行):https://modelscope.cn/collections/Qwen25-VL-58fbb5d31f1d47
   找到相应的硬件带得动的模型大小.
@@ -165,7 +223,7 @@
   ```
   然后可以在Qwen2.5本体处调用模型了，较为方便.
 
-### demo测试
+## demo测试
 
 - 图片理解
 
