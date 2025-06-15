@@ -189,10 +189,10 @@
   uv add -r requirements.txt
   ```
 
-- flash-attn安装(未解决)
+- flash-attn安装(~~未解决~~已解决)
   通常来说，直接pip安装，或者uv add安装容易出现**依赖错误或者版本错误**，使用官网包安装.
 
-  在官网找到对应的cuda、torch、cpython版本
+  在官网找到对应的cuda、torch、cpython版本和abiTrue or False,这个就自己两个都试一下，能跑通就行.
   官网版本：https://github.com/Dao-AILab/flash-attention/releases
 
   ```shell
