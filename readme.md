@@ -3,8 +3,8 @@
 ## 目录
 
 [环境配置](#环境配置)  
-[模型下载](#模型下载)
-[推理测试](#demo测试)
+[模型下载](#模型下载)  
+[推理测试](#demo测试)  
 
 ## 环境配置
 
@@ -201,8 +201,10 @@
 
 ## 模型下载
 
-- 安装模型本体
-  魔搭社区(huggingface也行):https://modelscope.cn/collections/Qwen25-VL-58fbb5d31f1d47
+看模型安装方法，可以去huggingface与modelscope同时查看，哪种方便用哪种.
+
+- 安装模型本体(modelscope方法)
+  魔搭社区:https://modelscope.cn/collections/Qwen25-VL-58fbb5d31f1d47
   找到相应的硬件带得动的模型大小.
 
   这里我用git安装(**缺点：无可视化进度、会把log也clone下来**)，魔搭社区也有其他安装方法.
@@ -216,6 +218,44 @@
   modelscope download --model Qwen/Qwen2.5-VL-32B-Instruct --local_dir ./dir # 指定本地路径
   ```
   <br>
+
+- 安装模型本体(transformer方法)
+  
+  设置使用镜像站
+  ```py
+  import os
+  os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+  ```
+  
+  使用transformers安装到指定目录(具体方法看不同模型)
+  ```py
+  os.environ["CUDA_VISIBLE_DEVICES"] = "1,2,3,4"
+  from transformers import AutoProcessor, AutoModelForCausalLM
+  from model.LISA import LISAForCausalLM
+  import torch
+
+  cache_dir = "/data_all/share/models/HuaWei/LISA"
+
+  # 后续加载会自动使用指定路径
+  processor = AutoProcessor.from_pretrained(
+      "xinlai/LISA-13B-llama2-v1",
+      cache_dir = cache_dir
+  )
+
+  model = LISAForCausalLM.from_pretrained(
+      "xinlai/LISA-13B-llama2-v1",
+      cache_dir = cache_dir,
+      torch_dtype = torch.bfloat16,
+      device = "auto"
+  )
+  ```
+
+  查看模型默认安装路径
+  ```py
+  from transformers import TRANSFORMERS_CACHE
+  print(TRANSFORMERS_CACHE)
+  ```
+
 - 链接模型文件到Qwen2.5Vl本体(option/可选)
   ```shell
   cd Qwen2.5VL
